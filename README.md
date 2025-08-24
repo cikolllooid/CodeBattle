@@ -1,6 +1,6 @@
 # ⚔️ CodeBattle — Codewars inside Telegram
 
-**CodeBattle** is a ready-to-use mini platform for coding challenges right inside a Telegram Mini App, [TgBot](link to the registration bot https://github.com/cikolllooid/TgBotCodeBattle)
+**CodeBattle** is a ready-to-use mini platform for coding challenges right inside a Telegram Mini App, link to the registration bot [TgBot](https://github.com/cikolllooid/TgBotCodeBattle)
 Think **Codewars / LeetCode**, but fully integrated into Telegram — fast, simple and accessible.  
 
 ---
