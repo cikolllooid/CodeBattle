@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Duel: Telegram Mini App</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <script src="https://telegram.org/js/telegram-web-app.js?59"></script>
+    
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow: hidden;
+      }
+      #root {
+        height: 100vh;
+        padding-bottom: 56px;
+        box-sizing: border-box;
+      }
+      .preloader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+      }
+      .preloader-text {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #aaa;
+      }
+    </style>
+    
+    <script>
+      // Сохраняем данные Telegram в sessionStorage
+      function initTelegramWebApp() {
+        try {
+          if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.expand();
+            
+            // Сохраняем данные для React
+            sessionStorage.setItem('telegram_init_data', window.Telegram.WebApp.initData || '');
+            sessionStorage.setItem('telegram_user', JSON.stringify(
+              window.Telegram.WebApp.initDataUnsafe?.user || {}
+            ));
+            
+            console.log('Telegram WebApp initialized');
+            return true;
+          }
+          return false;
+        } catch (e) {
+          console.error('Error initializing Telegram WebApp:', e);
+          return false;
+        }
+      }
+
+      // Инициализация при загрузке страницы
+      document.addEventListener('DOMContentLoaded', function() {
+        const root = document.getElementById('root');
+        root.innerHTML = `
+          <div class="preloader">
+            <svg width="50" height="50" viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="20" stroke="#3f51b5" stroke-width="4" fill="none" stroke-dasharray="31.415, 31.415" stroke-dashoffset="0">
+                <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+            <div class="preloader-text">Initializing Telegram WebApp...</div>
+          </div>
+        `;
+
+        // Пытаемся инициализировать
+        setTimeout(() => {
+          const initialized = initTelegramWebApp();
+          if (!initialized) {
+            console.warn('Telegram WebApp not initialized');
+            sessionStorage.setItem('telegram_init_error', 'Initialization failed');
+          }
+          
+          // Запускаем React приложение
+          const script = document.createElement('script');
+          script.type = 'module';
+          script.src = '/src/index.jsx';
+          document.body.appendChild(script);
+        }, 300);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+  // Принудительная инициализация WebApp
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.Telegram && window.Telegram.WebApp) {
+      try {
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+        
+        // Сохраняем данные для React
+        const initData = window.Telegram.WebApp.initData;
+        const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+        
+        sessionStorage.setItem('telegram_init_data', initData);
+        sessionStorage.setItem('telegram_init_data_unsafe', JSON.stringify(initDataUnsafe));
+        
+        console.log('Telegram WebApp initialized:', initDataUnsafe);
+      } catch (e) {
+        console.error('WebApp init error:', e);
+      }
+    }
+  });
+</script>
+  </body>
+</html>

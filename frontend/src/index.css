@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.miniapp-container {
+  height: 100vh;
+  padding-bottom: 56px;
+  box-sizing: border-box;
+}
+
+.MuiPaper-root {
+  background-color: #1e1e1e !important;
+  color: white !important;
+}
+
+.MuiSlider-root {
+  color: #6200ea !important;
+}
